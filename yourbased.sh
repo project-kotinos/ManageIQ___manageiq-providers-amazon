@@ -15,4 +15,4 @@ gem install bundler -v 2.0.1
 # install
 bin/setup
 # script
-rake
+bundle exec rake
