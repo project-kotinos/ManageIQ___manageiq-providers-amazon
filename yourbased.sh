@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 export DEBIAN_FRONTEND=noninteractive
-export CI=true
+#export CI=true
 export TRAVIS=true
 export CONTINUOUS_INTEGRATION=true
 export USER=travis
