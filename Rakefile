@@ -1,5 +1,5 @@
 require 'bundler/setup'
-
+require 'yourbase/rspec/skipper'
 begin
   require 'rspec/core/rake_task'
 
