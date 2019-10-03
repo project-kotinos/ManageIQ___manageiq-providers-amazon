@@ -15,4 +15,5 @@ gem install bundler -v 2.0.1
 # install
 bin/setup
 # script
+chmod 0600 /root/.netrc
 bundle exec rake --trace spec
