@@ -1,0 +1,50 @@
+build_targets:
+- commands:
+  - apt-get update
+  - apt-get install -y tzdata libcurl4-openssl-dev cmake libpq-dev libxml2-dev postgresql-client
+  - gem install bundler -v 2.0.1
+  - chmod 0600 /root/.netrc
+  - bin/setup
+  - bundle exec rake --trace spec
+  container:
+    image: yourbase/yb_ubuntu:16.04
+  name: default
+  environment:
+    - SKIPPER_IGNORE=bin/setup
+    - RUBY_GC_HEAP_GROWTH_MAX_SLOTS=300000
+    - RUBY_GC_HEAP_INIT_SLOTS=600000
+    - RUBY_GC_HEAP_GROWTH_FACTOR=1.25
+    - DISABLE_DATABASE_ENVIRONMENT_CHECK=true
+    - DATABASE_ADAPTER=postgresql
+    - DATABASE_USERNAME=postgres
+    - PGHOST={{ .Containers.IP "db" }}
+    - DEBIAN_FRONTEND=noninteractive
+    - CI=true
+    - TRAVIS=true
+    - CONTINUOUS_INTEGRATION=true
+    - USER=travis
+    - LANG=en_US.UTF-8
+    - LC_ALL=en_US.UTF-8
+    - RAILS_ENV=test
+    - RACK_ENV=test
+    - MERB_ENV=test
+  dependencies:
+      containers:
+        db:
+          image: postgres:10.10
+          environment:
+            - POSTGRES_PASSWORD=
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=postgres
+          port_check:
+            port: 5432
+            timeout: 45
+ci:
+  builds:
+  - build_target: default
+    name: default
+dependencies:
+  build:
+  - ruby:2.5.3
+  - node:10.15.1
+

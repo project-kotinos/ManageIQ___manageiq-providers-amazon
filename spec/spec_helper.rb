@@ -1,3 +1,4 @@
+require 'yourbase/rspec/skipper'
 if ENV['CI']
   require 'simplecov'
   SimpleCov.start
